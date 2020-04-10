@@ -1,7 +1,7 @@
 <template>
-    <div class="cell">
-      <span v-if="value !== ''">{{ value }}</span>
-    </div>
+  <div class="cell">
+    <span v-if="value !== ''">{{ value }}</span>
+  </div>
 </template>
 
 <script>

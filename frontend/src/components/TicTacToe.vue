@@ -2,7 +2,7 @@
   <div class="tictactoe-board">
     <div v-for="(n, i) in 3" :key="i">
       <div v-for="(n, j) in 3" :key="j">
-        <cell :value="board[i][j]"></cell>
+        <cell :value="board[i][j]" @click="play(n, j)"></cell>
       </div>
     </div>
   </div>
@@ -18,9 +18,17 @@ export default {
     return {
       board: [
         ['', '', ''],
-        ['', 'x', ''],
+        ['', '', ''],
         ['', '', '']
       ]
+    }
+  },
+  mounted () {
+    this.trySock()
+  },
+  methods: {
+    trySock () {
+      this.$socket.emit('test_sock', 'TEST DATA')
     }
   }
 }
