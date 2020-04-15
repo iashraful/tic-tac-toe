@@ -19,8 +19,7 @@ export default {
     }
   },
   mounted () {
-    this.$io.on('NEW_PLAYER_ADDED', playerName => {
-      console.log('DATA: ', playerName)
+    this.$io.on('NEW_PLAYER_ADDED', (playerName) => {
       this.playerList.push(playerName)
     })
   }
