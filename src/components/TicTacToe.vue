@@ -23,14 +23,7 @@ export default {
       ]
     }
   },
-  mounted () {
-    this.trySock()
-  },
-  methods: {
-    trySock () {
-      this.$socket.emit('test_sock', 'TEST DATA')
-    }
-  }
+  methods: {}
 }
 </script>
 
