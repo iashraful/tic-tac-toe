@@ -22,13 +22,11 @@ if (process.env.NODE_ENV === 'production') {
             'process.env': {
                 NODE_ENV: '"production"'
             }
-        }),
-        new MinifyPlugin()
+        })
     )
 }
 let entryFile = {
-    main: './src/main.js',
-    extra: './src/extra-chunks',
+    main: './src/main.js'
 
 };
 

@@ -1,8 +1,5 @@
 <template>
   <div class="playground">
-    <div class="players">
-      {{ playerList }}
-    </div>
     <tic-tac-toe/>
   </div>
 </template>

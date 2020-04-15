@@ -1,8 +1,8 @@
 <template>
   <div class="tictactoe-board">
     <div v-for="(n, i) in 3" :key="i">
-      <div v-for="(n, j) in 3" :key="j">
-        <cell :value="board[i][j]" @click="play(n, j)"></cell>
+      <div v-for="(n, j) in 3" :key="j" @click="clickOnCell(n, j)">
+        <cell :value="board[i][j]"></cell>
       </div>
     </div>
   </div>
@@ -23,7 +23,12 @@ export default {
       ]
     }
   },
-  methods: {}
+  methods: {
+    clickOnCell (x, y) {
+      console.log(x, y)
+      this.board[x].splice(y, 1, 'o')
+    }
+  }
 }
 </script>
 

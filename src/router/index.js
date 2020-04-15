@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Playground from '../views/Playground.vue'
 
 Vue.use(VueRouter)
 
@@ -11,9 +12,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/playground',
+    path: '/playground/:userId',
     name: 'Playground',
-    component: () => import('../views/Playground.vue')
+    component: Playground
   }
 ]
 
