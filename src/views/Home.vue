@@ -26,7 +26,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      me: JSON.parse(localStorage.getItem('me')) || {},
+      me: {},
       playerList: [],
       player: {
         name: '',
@@ -45,7 +45,6 @@ export default {
       this.player.id = uuidv4()
       this.$io.emit('new_player', this.player)
       this.me = this.player
-      localStorage.setItem('me', JSON.stringify(this.me))
       this.playerList.push(JSON.parse(JSON.stringify(this.player)))
     },
     playersExceptMe (players) {

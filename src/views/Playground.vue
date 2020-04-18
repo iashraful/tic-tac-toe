@@ -12,13 +12,14 @@ export default {
   components: { TicTacToe },
   data () {
     return {
-      playerList: []
+      player1: {},
+      player2: {}
     }
   },
   mounted () {
-    this.$io.on('NEW_PLAYER_ADDED', (playerName) => {
-      this.playerList.push(playerName)
-    })
+
+  },
+  methods: {
   }
 }
 </script>
