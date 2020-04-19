@@ -15,6 +15,10 @@ function getPlayerList () {
   return Object.values(playerSocketMapping)
 }
 
+function ifAValidUser (uuid) {
+  return getPlayerList().find((u) => u.id === uuid)
+}
+
 io.on('connection', socket => {
   console.log(`connected with socket id ${socket.id}`)
   socket.broadcast.emit('ALL_PLAYERS', getPlayerList(playerSocketMapping))

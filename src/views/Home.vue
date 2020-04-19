@@ -26,8 +26,6 @@ export default {
   name: 'Home',
   data () {
     return {
-      me: {},
-      playerList: [],
       player: {
         name: '',
         id: uuidv4()
@@ -35,17 +33,20 @@ export default {
       linkCopied: false
     }
   },
-  mounted () {
-    this.$io.on('ALL_PLAYERS', (players) => {
-      this.playerList = players
-    })
+  computed: {
+    me () {
+      return this.$store.getters.getMe
+    },
+    playerList () {
+      return this.$store.getters.getPlayerList
+    }
   },
   methods: {
     onPlayerNameSubmit () {
       this.player.id = uuidv4()
       this.$io.emit('new_player', this.player)
-      this.me = this.player
-      this.playerList.push(JSON.parse(JSON.stringify(this.player)))
+      this.$store.commit('addLoginUser', this.player)
+      this.$store.commit('updatePlayerList', JSON.parse(JSON.stringify(this.player)))
     },
     playersExceptMe (players) {
       return players.filter((p) => p.id !== this.me.id)

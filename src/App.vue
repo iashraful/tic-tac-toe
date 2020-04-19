@@ -6,7 +6,12 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    this.$io.on('ALL_PLAYERS', (players) => {
+      this.$store.commit('setPlayerList', players)
+    })
+  }
 }
 </script>
 
