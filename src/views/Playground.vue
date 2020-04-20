@@ -1,14 +1,17 @@
 <template>
   <div class="playground">
+    <p>{{ mgs }}</p>
     <tic-tac-toe/>
   </div>
 </template>
 
 <script>
 import TicTacToe from '../components/TicTacToe'
+import UserMixin from '../mixins/user_mixin'
 
 export default {
   name: 'Playground',
+  mixins: [UserMixin],
   components: { TicTacToe },
   data () {
     return {
@@ -18,7 +21,14 @@ export default {
     }
   },
   mounted () {
-    this.getPlayerOne()
+    if (!(this.me && this.me.id)) {
+      this.$router.push('/')
+    } else {
+      this.$io.emit('PLAY_REQUEST', {
+        from: this.me,
+        to: this.getPlayerOne()
+      })
+    }
   },
   methods: {
     getPlayerOne () {

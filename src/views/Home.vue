@@ -21,9 +21,11 @@
 
 <script>
 import { v4 as uuidv4 } from 'uuid'
+import UserMixin from '../mixins/user_mixin'
 
 export default {
   name: 'Home',
+  mixins: [UserMixin],
   data () {
     return {
       player: {
@@ -31,14 +33,6 @@ export default {
         id: uuidv4()
       },
       linkCopied: false
-    }
-  },
-  computed: {
-    me () {
-      return this.$store.getters.getMe
-    },
-    playerList () {
-      return this.$store.getters.getPlayerList
     }
   },
   methods: {

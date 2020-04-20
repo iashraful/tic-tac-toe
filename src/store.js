@@ -11,6 +11,10 @@ const mutations = {
     localStorage.setItem('me', JSON.stringify(payload))
     state.me = payload
   },
+  removeLoginUser(state) {
+    localStorage.setItem('me', JSON.stringify({}))
+    state.me = {}
+  },
   updatePlayerList (state, player) {
     state.playerList.push(player)
   },
