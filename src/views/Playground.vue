@@ -1,7 +1,12 @@
 <template>
   <div class="playground">
-    <p>{{ mgs }}</p>
-    <tic-tac-toe/>
+    <p><strong>Hi, {{ me.name }}. </strong>{{ mgs }}</p>
+    <p>{{ instructionOneMgs }}</p>
+    <tic-tac-toe
+      :active-sign="activeSign"
+      :player-info="playerInfo"
+      :login-user="me"
+    />
   </div>
 </template>
 
@@ -15,30 +20,42 @@ export default {
   components: { TicTacToe },
   data () {
     return {
-      player1: {},
-      player2: {},
-      mgs: 'Waiting for another player to join...'
+      activeSign: 'x',
+      playerInfo: {},
+      mgs: 'Waiting for another player to join...',
+      instructionOneMgs: ''
     }
   },
   mounted () {
+    this.$io.on('PLAY_REQ_ACCEPTED_BY_USER', (data) => {
+      console.log(data)
+      if (data.to.id === this.me.id) {
+        this.playerInfo = data.from
+        this.mgs = 'Game is started.'
+        this.instructionOneMgs = 'You are "o"'
+        this.activeSign = 'o'
+      } else {
+        this.playerInfo = data.to
+      }
+    })
+
+    if (this.me.id === this.$route.params.userId) {
+      this.mgs = 'Game has started.'
+      this.instructionOneMgs = 'You are "x"'
+      this.activeSign = 'x'
+    }
+
     if (!(this.me && this.me.id)) {
       this.$router.push('/')
     } else {
       this.$io.emit('PLAY_REQUEST', {
         from: this.me,
-        to: this.getPlayerOne()
+        to: {id: this.$route.params.userId}
       })
     }
   },
   methods: {
-    getPlayerOne () {
-      /**
-       * Player 1 is a person who copied the the link and shared with others
-       */
-      const playerOneId = this.$route.params.userId
-      this.player1 = this.$store.getters.getPlayerById(playerOneId)
-      console.log(this.player1)
-    }
+
   }
 }
 </script>
@@ -47,5 +64,7 @@ export default {
 .playground {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>

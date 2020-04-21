@@ -5,6 +5,10 @@
       <input id="player-name-input" v-model="player.name"/>
     </form>
     <div v-if="me.id">
+      <p v-if="playRequest">
+        {{ playRequestFrom.name }} wants to play with you.
+        <button @click="playingRequestAccept">Accept</button>
+      </p>
       <h3>Welcome {{ me.name }}!</h3>
       <button @click="copyInvitationLink(me)">Invitation link</button>
       <span v-if="linkCopied">(copied)</span>
@@ -28,12 +32,22 @@ export default {
   mixins: [UserMixin],
   data () {
     return {
+      playRequest: false,
+      playRequestFrom: {},
       player: {
         name: '',
         id: uuidv4()
       },
       linkCopied: false
     }
+  },
+  mounted() {
+    this.$io.on(`PLAY_REQ_TO_CLIENT`, (data) => {
+      if (data.to.id === this.me.id) {
+        this.playRequest = true
+        this.playRequestFrom = data.from
+      }
+    })
   },
   methods: {
     onPlayerNameSubmit () {
@@ -53,6 +67,13 @@ export default {
       } catch (e) {
         this.linkCopied = false
       }
+    },
+    playingRequestAccept () {
+      this.$io.emit('PLAY_REQ_ACCEPTED', {
+        from: this.me,
+        to: this.playRequestFrom
+      })
+      this.$router.push(`/playground/${this.me.id}`)
     }
   }
 }

@@ -20,7 +20,7 @@ function ifAValidUser (uuid) {
 }
 
 io.on('connection', socket => {
-  console.log(`connected with socket id ${socket.id}`)
+  // console.log(`connected with socket id ${socket.id}`)
   socket.broadcast.emit('ALL_PLAYERS', getPlayerList(playerSocketMapping))
   socket.emit('ALL_PLAYERS', getPlayerList(playerSocketMapping))
 
@@ -30,10 +30,24 @@ io.on('connection', socket => {
     // socket.emit('ALL_PLAYERS', getPlayerList(playerSocketMapping))
   })
 
+  socket.on("PLAY_REQUEST", (data) => {
+    socket.broadcast.emit('PLAY_REQ_TO_CLIENT', data)
+  })
+
+  socket.on("PLAY_REQ_ACCEPTED", (data) => {
+    socket.broadcast.emit('PLAY_REQ_ACCEPTED_BY_USER', data)
+    socket.emit('PLAY_REQ_ACCEPTED_BY_USER', data)
+  })
+
+  socket.on("PLAYED_BY_A_PLAYER", (data) => {
+    console.log(data)
+    socket.broadcast.emit(`PLAYED_BY_ANOTHER_${data.id}`, data)
+  })
+
   socket.on("disconnect", () => {
     delete playerSocketMapping[socket.id]
     socket.broadcast.emit('ALL_PLAYERS', getPlayerList(playerSocketMapping))
-  });
+  })
 })
 
 http.listen(5001, () => {
