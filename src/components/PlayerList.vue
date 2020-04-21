@@ -8,7 +8,6 @@
         <b-table-column field="actions" label="Actions" sortable>
           <b-button type="is-success" size="is-small">Challenge</b-button>
         </b-table-column>
-
       </template>
     </b-table>
   </div>

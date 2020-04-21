@@ -28,6 +28,7 @@
 
       <div v-if="playerList.length > 1" class="subtitle">Players online</div>
       <player-list :players="playersExceptMe(playerList)"/>
+      <p v-if="playersExceptMe(playerList).length === 0">No active players</p>
     </div>
   </div>
 </template>
