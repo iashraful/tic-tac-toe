@@ -40,8 +40,7 @@ io.on('connection', socket => {
   })
 
   socket.on("PLAYED_BY_A_PLAYER", (data) => {
-    console.log(data)
-    socket.broadcast.emit(`PLAYED_BY_ANOTHER_${data.id}`, data)
+    socket.broadcast.emit(`PLAYED_BY_ANOTHER_${data.playerInfo.id}`, data)
   })
 
   socket.on("disconnect", () => {

@@ -47,15 +47,27 @@ export default {
   mounted() {
     this.$io.on(`PLAYED_BY_ANOTHER_${this.loginUser.id}`, (data) => {
       this.disableForMe = false
+      console.log(data)
+      this.updateMatrixData(data.matrix.xAxis, data.matrix.yAxis, data.matrix.sign)
     })
   },
   methods: {
     clickOnCell (x, y) {
       if (!this.disableForMe) {
         this.disableForMe = !this.disableForMe
-        this.$io.emit('PLAYED_BY_A_PLAYER', this.playerInfo)
-        this.board[x].splice(y, 1, this.activeSign)
+        this.$io.emit('PLAYED_BY_A_PLAYER', {
+          playerInfo: this.playerInfo,
+          matrix: {
+            xAxis: x,
+            yAxis: y,
+            sign: this.activeSign
+          }
+        })
+        this.updateMatrixData(x, y)
       }
+    },
+    updateMatrixData (x, y, sign=this.activeSign) {
+      this.board[x].splice(y, 1, sign)
     }
   }
 }

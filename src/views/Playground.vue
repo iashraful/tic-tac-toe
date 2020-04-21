@@ -28,7 +28,6 @@ export default {
   },
   mounted () {
     this.$io.on('PLAY_REQ_ACCEPTED_BY_USER', (data) => {
-      console.log(data)
       if (data.to.id === this.me.id) {
         this.playerInfo = data.from
         this.mgs = 'Game is started.'
