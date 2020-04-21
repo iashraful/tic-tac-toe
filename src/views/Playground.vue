@@ -27,6 +27,11 @@ export default {
     }
   },
   mounted () {
+    this.$io.on('PLAY_REQ_REJECTED_BY_USER', (data) => {
+      if (data.to.id === this.me.id) {
+        this.$router.push('/')
+      }
+    })
     this.$io.on('PLAY_REQ_ACCEPTED_BY_USER', (data) => {
       if (data.to.id === this.me.id) {
         this.playerInfo = data.from

@@ -39,6 +39,12 @@ io.on('connection', socket => {
     socket.emit('PLAY_REQ_ACCEPTED_BY_USER', data)
   })
 
+  socket.on("PLAY_REQ_REJECTED", (data) => {
+    socket.broadcast.emit('PLAY_REQ_REJECTED_BY_USER', data)
+    socket.emit('PLAY_REQ_REJECTED_BY_USER', data)
+  })
+
+
   socket.on("PLAYED_BY_A_PLAYER", (data) => {
     socket.broadcast.emit(`PLAYED_BY_ANOTHER_${data.playerInfo.id}`, data)
   })

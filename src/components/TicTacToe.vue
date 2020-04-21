@@ -47,7 +47,6 @@ export default {
   mounted() {
     this.$io.on(`PLAYED_BY_ANOTHER_${this.loginUser.id}`, (data) => {
       this.disableForMe = false
-      console.log(data)
       this.updateMatrixData(data.matrix.xAxis, data.matrix.yAxis, data.matrix.sign)
     })
   },

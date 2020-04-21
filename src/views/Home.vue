@@ -1,24 +1,33 @@
 <template>
   <div class="home">
+    <div class="title main-title">Tic Tac Toe</div>
     <form @submit.prevent="onPlayerNameSubmit" v-show="!me.id">
-      <label for="player-name-input">Your name</label>
-      <input id="player-name-input" v-model="player.name"/>
+      <b-field>
+        <b-input placeholder="Enter your name" size="is-medium" v-model="player.name"></b-input>
+      </b-field>
     </form>
     <div v-if="me.id">
-      <p v-if="playRequest">
-        {{ playRequestFrom.name }} wants to play with you.
-        <button @click="playingRequestAccept">Accept</button>
-      </p>
-      <h3>Welcome {{ me.name }}!</h3>
-      <button @click="copyInvitationLink(me)">Invitation link</button>
-      <span v-if="linkCopied">(copied)</span>
+      <div class="greetings">
+        <span class="subtitle">Welcome {{ me.name }}!</span>
+        <b-button
+          type="is-primary"
+          outlined
+          size="is-small"
+          @click="copyInvitationLink(me)">
+          Invitation Link
+        </b-button>
+        <span v-if="linkCopied">(copied)</span>
+      </div>
+      <hr style="margin-top: 5px"/>
 
-      <h4 v-if="playerList.length > 1">Players online</h4>
-      <ul>
-        <li v-for="p in playersExceptMe(playerList)" :key="p.id">
-          {{ p.name }}
-        </li>
-      </ul>
+      <div v-if="playRequest">
+        {{ playRequestFrom.name }} wants to play with you.
+        <b-button @click="playingRequestAccept" type="is-primary" size="is-small">Accept</b-button>
+        <b-button @click="playingRequestReject" type="is-danger" size="is-small">Reject</b-button>
+      </div>
+
+      <div v-if="playerList.length > 1" class="subtitle">Players online</div>
+      <player-list :players="playersExceptMe(playerList)"/>
     </div>
   </div>
 </template>
@@ -26,10 +35,12 @@
 <script>
 import { v4 as uuidv4 } from 'uuid'
 import UserMixin from '../mixins/user_mixin'
+import PlayerList from '../components/PlayerList'
 
 export default {
   name: 'Home',
   mixins: [UserMixin],
+  components: { PlayerList },
   data () {
     return {
       playRequest: false,
@@ -46,6 +57,17 @@ export default {
       if (data.to.id === this.me.id) {
         this.playRequest = true
         this.playRequestFrom = data.from
+      }
+    })
+    this.$io.on('PLAY_REQ_REJECTED_BY_USER', (data) => {
+      if (data.from.id === this.me.id) {
+        this.playRequest = false
+      }
+      if (data.to.id === this.me.id) {
+        this.$buefy.notification.open({
+          message: 'Request rejected.',
+          type: 'is-danger'
+        })
       }
     })
   },
@@ -74,14 +96,28 @@ export default {
         to: this.playRequestFrom
       })
       this.$router.push(`/playground/${this.me.id}`)
+    },
+    playingRequestReject () {
+      this.$io.emit('PLAY_REQ_REJECTED', {
+        from: this.me,
+        to: this.playRequestFrom
+      })
     }
   }
 }
 </script>
 
-<style>
-.home {
-  display: flex;
-  justify-content: center;
-}
+<style lang="scss">
+  .home {
+    margin: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .main-title {
+      font-weight: 700;
+      color: #7a14de;
+    }
+  }
 </style>
