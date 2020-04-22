@@ -50,6 +50,15 @@ export default {
       }
 
       return false
+    },
+    playAgain () {
+      this.board = [
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', '']
+      ]
+      this.disableForMe = false
+      this.gameOverText = ''
     }
   }
 }

@@ -8,6 +8,7 @@
         <cell :value="board[i][j]"></cell>
       </div>
     </div>
+    <b-button v-if="gameOverText" type="is-info" @click="playAgain">Play Again</b-button>
     <p class="title has-text-centered" v-show="gameOverText">{{ gameOverText }}</p>
   </div>
 </template>
