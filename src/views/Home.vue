@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <div class="title main-title">Tic Tac Toe</div>
     <form @submit.prevent="onPlayerNameSubmit" v-show="!me.id">
       <b-field>
         <b-input placeholder="Enter your name" size="is-medium" v-model="player.name"></b-input>
@@ -120,18 +119,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .home {
-    margin: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    .main-title {
-      font-weight: 700;
-      color: #7a14de;
-    }
-  }
-</style>

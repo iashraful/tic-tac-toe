@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div class="title main-title">Tic Tac Toe</div>
     <p v-show="alertMgs !== ''">{{ alertMgs }}</p>
     <router-view/>
   </div>
@@ -24,8 +25,17 @@ export default {
 }
 </script>
 
-<style>
-  /** {*/
-  /*  background-color: darkslategray;*/
-  /*}*/
+<style lang="scss">
+ .container {
+   margin: 3rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+
+   .main-title {
+     font-weight: 700;
+     color: #7a14de;
+   }
+ }
 </style>
