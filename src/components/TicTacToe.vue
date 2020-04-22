@@ -1,15 +1,20 @@
 <template>
-  <div class="tictactoe-board">
-    <div v-for="(n, i) in 3" :key="i">
-      <div
-          v-for="(n, j) in 3" :key="j"
-          :class="disableForMe ? 'mouse-disable' : 'mouse-enable'"
-          @click="clickOnCell(i, j)">
-        <cell :value="board[i][j]"></cell>
+  <div class="container">
+    <div class="tictactoe-board">
+      <div v-for="(n, i) in 3" :key="i">
+        <div
+            v-for="(n, j) in 3" :key="j"
+            :class="disableForMe ? 'mouse-disable' : 'mouse-enable'"
+            @click="clickOnCell(i, j)">
+          <cell :value="board[i][j]"></cell>
+        </div>
       </div>
     </div>
-    <b-button v-if="gameOverText" type="is-info" @click="playAgain">Play Again</b-button>
-    <p class="title has-text-centered" v-show="gameOverText">{{ gameOverText }}</p>
+
+    <div class="game-utility">
+      <p class="title has-text-centered" v-if="gameOverText">{{ gameOverText }}</p>
+      <b-button v-if="gameOverText" type="is-warning" @click="playAgain">Play Again</b-button>
+    </div>
   </div>
 </template>
 
@@ -99,9 +104,12 @@
     .mouse-enable {
       cursor: pointer;
     }
+  }
 
-    .has-text-centered {
-      text-align: center;
+  .game-utility {
+    p {
+      color: #7a14de;
+      font-weight: 700;
     }
   }
 </style>

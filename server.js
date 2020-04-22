@@ -44,9 +44,13 @@ io.on('connection', socket => {
     socket.emit('PLAY_REQ_REJECTED_BY_USER', data)
   })
 
-
   socket.on("PLAYED_BY_A_PLAYER", (data) => {
     socket.broadcast.emit(`PLAYED_BY_ANOTHER_${data.playerInfo.id}`, data)
+  })
+
+  socket.on("PLAY_AGAIN", (data) => {
+    console.log(data)
+    socket.broadcast.emit(`PLAY_AGAIN_REQ_${data.to.id}`, data)
   })
 
   socket.on("disconnect", () => {

@@ -52,6 +52,10 @@ export default {
       return false
     },
     playAgain () {
+      this.$io.emit('PLAY_AGAIN', {
+        from: this.loginUser,
+        to: this.playerInfo
+      })
       this.board = [
         ['', '', ''],
         ['', '', ''],

@@ -1,7 +1,7 @@
 <template>
   <div class="playground">
     <p><strong>Hi, {{ me.name }}. </strong>{{ mgs }}</p>
-    <p>{{ instructionOneMgs }}</p>
+    <p style="padding-bottom: 1rem">{{ instructionOneMgs }}</p>
     <tic-tac-toe
       :active-sign="activeSign"
       :player-info="playerInfo"
@@ -41,6 +41,14 @@ export default {
       } else {
         this.playerInfo = data.to
       }
+    })
+
+    this.$io.on(`PLAY_AGAIN_REQ_${this.me.id}`, (data) => {
+      this.$buefy.notification.open({
+        message: `"${data.from.name}" wants to play again. Please press "Play Again" button.`,
+        type: 'is-success',
+        size: 'is-small'
+      })
     })
 
     if (this.me.id === this.$route.params.userId) {

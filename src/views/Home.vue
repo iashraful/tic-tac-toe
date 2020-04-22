@@ -20,7 +20,7 @@
       <hr style="margin-top: 5px"/>
 
       <div v-if="playRequest">
-        {{ playRequestFrom.name }} wants to play with you.
+        "{{ playRequestFrom.name }}" wants to play with you.
         <b-button @click="playingRequestAccept" type="is-primary" size="is-small">Accept</b-button>
         <b-button @click="playingRequestReject" type="is-danger" size="is-small">Reject</b-button>
       </div>
@@ -70,12 +70,6 @@ export default {
         })
       }
     })
-
-    // this.$io.on('PLAY_REQ_ACCEPTED_BY_USER', (data) => {
-    //   if (data.to.id === this.me.id) {
-    //     this.$router.push(`/playground/${data.from.id}`)
-    //   }
-    // })
   },
   methods: {
     onPlayerNameSubmit () {
