@@ -6,7 +6,10 @@
           {{ props.row.name }}
         </b-table-column>
         <b-table-column field="actions" label="Actions" sortable>
-          <b-button type="is-success" size="is-small">Challenge</b-button>
+          <b-button
+            type="is-success"
+            size="is-small"
+            @click="challengeToUser(props.row)">Challenge</b-button>
         </b-table-column>
       </template>
     </b-table>
@@ -16,7 +19,12 @@
 <script>
   export default {
     name: 'PlayerList',
-    props: ['players']
+    props: ['players', 'onPlayerChallenge'],
+    methods: {
+      challengeToUser (player) {
+        this.$emit('onPlayerChallenge', player)
+      }
+    }
   }
 </script>
 

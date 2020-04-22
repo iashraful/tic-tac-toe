@@ -27,7 +27,7 @@
       </div>
 
       <div v-if="playerList.length > 1" class="subtitle">Players online</div>
-      <player-list :players="playersExceptMe(playerList)"/>
+      <player-list :players="playersExceptMe(playerList)" @onPlayerChallenge="playerChallenge"/>
       <p v-if="playersExceptMe(playerList).length === 0">No active players</p>
     </div>
   </div>
@@ -71,6 +71,12 @@ export default {
         })
       }
     })
+
+    // this.$io.on('PLAY_REQ_ACCEPTED_BY_USER', (data) => {
+    //   if (data.to.id === this.me.id) {
+    //     this.$router.push(`/playground/${data.from.id}`)
+    //   }
+    // })
   },
   methods: {
     onPlayerNameSubmit () {
@@ -103,6 +109,13 @@ export default {
         from: this.me,
         to: this.playRequestFrom
       })
+    },
+    playerChallenge (toPlayer) {
+      this.$io.emit('PLAY_REQUEST', {
+        from: this.me,
+        to: toPlayer
+      })
+      this.$router.push(`/playground/${toPlayer.id}`)
     }
   }
 }
