@@ -45,7 +45,7 @@ export default {
 
     this.$io.on(`PLAY_AGAIN_REQ_${this.me.id}`, (data) => {
       this.$buefy.notification.open({
-        message: `"${data.from.name}" wants to play again. Please press "Play Again" button.`,
+        message: `"${data.from.name}" wants to play again.`,
         type: 'is-success',
         size: 'is-small'
       })
