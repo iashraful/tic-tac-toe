@@ -1,11 +1,12 @@
 <template>
   <div class="playground">
-    <p><strong>Hi, {{ me.name }}. </strong>{{ mgs }}</p>
     <p style="padding-bottom: 1rem">{{ instructionOneMgs }}</p>
+    <p><strong>Hi, {{ me.name }}. </strong>{{ mgs }}</p>
     <tic-tac-toe
       :active-sign="activeSign"
       :player-info="playerInfo"
       :login-user="me"
+      @boardStatus="onBoardStatusUpdate"
     />
   </div>
 </template>
@@ -35,7 +36,7 @@ export default {
     this.$io.on('PLAY_REQ_ACCEPTED_BY_USER', (data) => {
       if (data.to.id === this.me.id) {
         this.playerInfo = data.from
-        this.mgs = 'Game is started.'
+        this.mgs = 'You opponent\'s turn.'
         this.instructionOneMgs = 'You are "o"'
         this.activeSign = 'o'
       } else {
@@ -52,7 +53,7 @@ export default {
     })
 
     if (this.me.id === this.$route.params.userId) {
-      this.mgs = 'Game has started.'
+      this.mgs = 'Your turn.'
       this.instructionOneMgs = 'You are "x"'
       this.activeSign = 'x'
     }
@@ -67,7 +68,9 @@ export default {
     }
   },
   methods: {
-
+    onBoardStatusUpdate (status) {
+      this.mgs = status ? 'Your opponent\'s turn.' : 'Your turn.'
+    }
   }
 }
 </script>

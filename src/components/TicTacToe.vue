@@ -59,9 +59,15 @@
     mounted() {
       this.$io.on(`PLAYED_BY_ANOTHER_${this.loginUser.id}`, (data) => {
         this.disableForMe = false
+        this.$emit('boardStatus', this.disableForMe)
         this.updateMatrixData(data.matrix.xAxis, data.matrix.yAxis, data.matrix.sign)
         if (this.isGameOver()) {
           this.gameOverText = this.checkGameStatus(data.matrix.sign) ? 'You lose!' : 'Draw'
+        }
+      })
+      this.$io.on('PLAY_REQ_ACCEPTED_BY_USER', (data) => {
+        if (data.to.id === this.loginUser.id) {
+          this.disableForMe = true
         }
       })
     },
@@ -69,6 +75,7 @@
       clickOnCell(x, y) {
         if (!this.disableForMe) {
           this.disableForMe = !this.disableForMe
+          this.$emit('boardStatus', this.disableForMe)
           this.$io.emit('PLAYED_BY_A_PLAYER', {
             playerInfo: this.playerInfo,
             matrix: {
