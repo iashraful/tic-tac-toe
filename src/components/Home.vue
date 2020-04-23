@@ -35,7 +35,7 @@
 <script>
 import { v4 as uuidv4 } from 'uuid'
 import UserMixin from '../mixins/user_mixin'
-import PlayerList from '../components/PlayerList'
+import PlayerList from './PlayerList'
 
 export default {
   name: 'Home',
@@ -84,7 +84,7 @@ export default {
     async copyInvitationLink (me) {
       const _link = window.origin + '/#/playground/' + me.id
       try {
-        const _status = await navigator.clipboard.writeText(_link)
+        await navigator.clipboard.writeText(_link)
         this.linkCopied = true
       } catch (e) {
         this.linkCopied = false

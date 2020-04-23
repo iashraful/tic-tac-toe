@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TicTacToe from '../components/TicTacToe'
+import TicTacToe from './TicTacToe'
 import UserMixin from '../mixins/user_mixin'
 
 export default {
