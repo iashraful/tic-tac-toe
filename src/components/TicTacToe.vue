@@ -52,7 +52,7 @@
           ['', '', ''],
           ['', '', '']
         ],
-        disableForMe: false,
+        disableForMe: true,
         gameOverText: ''
       }
     },
@@ -66,8 +66,11 @@
         }
       })
       this.$io.on('PLAY_REQ_ACCEPTED_BY_USER', (data) => {
+        console.log(data)
         if (data.to.id === this.loginUser.id) {
           this.disableForMe = true
+        } else if (data.from.id === this.loginUser.id) {
+          this.disableForMe = false
         }
       })
     },

@@ -1,7 +1,9 @@
 <template>
   <div class="playground">
-    <p style="padding-bottom: 1rem">{{ instructionOneMgs }}</p>
-    <p><strong>Hi, {{ me.name }}. </strong>{{ mgs }}</p>
+    <div class="game-mgs">
+      <p style="padding-bottom: 1rem">{{ instructionOneMgs }}</p>
+      <p><strong>Hi, {{ me.name }}. </strong>{{ mgs }}</p>
+    </div>
     <tic-tac-toe
       :active-sign="activeSign"
       :player-info="playerInfo"
@@ -75,11 +77,18 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .playground {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  .game-mgs {
+    display: flex;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>
